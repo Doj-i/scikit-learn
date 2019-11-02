@@ -596,7 +596,8 @@ class BaseSearchCV(MetaEstimatorMixin, BaseEstimator, metaclass=ABCMeta):
         raise NotImplementedError("_run_search not implemented.")
 
     def fit(self, X, y=None, groups=None, **fit_params):
-        """Run fit with all sets of parameters.
+        """
+        Run fit with all sets of parameters.
 
         Parameters
         ----------
@@ -614,8 +615,12 @@ class BaseSearchCV(MetaEstimatorMixin, BaseEstimator, metaclass=ABCMeta):
             train/test set. Only used in conjunction with a "Group" :term:`cv`
             instance (e.g., :class:`~sklearn.model_selection.GroupKFold`).
 
-        **fit_params : dict of string -> object
+        **fit_params : dict of string -> object.
             Parameters passed to the ``fit`` method of the estimator
+        
+        Returns
+        ----------
+        Implements a randomized search over parameters, where each setting is sampled from a distribution over possible parameter values.
         """
         estimator = self.estimator
         cv = check_cv(self.cv, y, classifier=is_classifier(estimator))
